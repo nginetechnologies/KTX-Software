@@ -50,6 +50,8 @@ docker exec -it emscripten sh -c "apt-add-repository 'deb https://apt.kitware.co
 docker exec -it emscripten sh -c "apt-get update"
 docker exec -it emscripten sh -c "apt-get -qq install -y --no-install-recommends cmake"
 
+echo "Emscripten version"
+docker -exec -it emscripten sh -c "emccc --version"
 
 echo "Configure/Build KTX-Software (Web Debug)"
 docker exec -it emscripten sh -c "emcmake cmake -Bbuild-web-debug . && cmake --build build-web-debug --config Debug"
