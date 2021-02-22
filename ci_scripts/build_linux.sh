@@ -40,9 +40,8 @@ popd
 # Emscripten/WebAssembly
 
 
-# Temporary solution: Update CMake. Can be dropped once the Ubuntu version in the docker
-# container is updated.
-echo "Update CMake for Web"
+# Add cmake & cpack to the Emscripten docker image.
+echo "Add CMake to Emscripten Docker image for Web"
 docker exec -it emscripten sh -c "apt-get update"
 docker exec -it emscripten sh -c "apt-get -qq install -y --no-install-recommends apt-transport-https ca-certificates gnupg software-properties-common wget"
 docker exec -it emscripten sh -c "wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
