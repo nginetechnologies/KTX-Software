@@ -42,12 +42,12 @@ popd
 
 # Add cmake & cpack to the Emscripten docker image.
 echo "Add CMake to Emscripten Docker image for Web"
-docker exec -it emscripten sh -c "apt-get update"
-docker exec -it emscripten sh -c "apt-get -qq install -y --no-install-recommends apt-transport-https ca-certificates gnupg software-properties-common wget"
+docker exec -it emscripten sh -c "DEBIAN_FRONTEND=noninteractive apt-get update"
+docker exec -it emscripten sh -c "DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends apt-transport-https ca-certificates gnupg software-properties-common wget"
 docker exec -it emscripten sh -c "wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
-docker exec -it emscripten sh -c "apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'"
-docker exec -it emscripten sh -c "apt-get update"
-docker exec -it emscripten sh -c "apt-get -qq install -y --no-install-recommends cmake"
+docker exec -it emscripten sh -c "DEBIAN_FRONTEND=noninteractive apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'"
+docker exec -it emscripten sh -c "DEBIAN_FRONTEND=noninteractive apt-get update"
+docker exec -it emscripten sh -c "DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends cmake"
 
 echo "Emscripten version"
 docker exec -it emscripten sh -c "emcc --version"
