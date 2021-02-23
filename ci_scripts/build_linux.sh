@@ -45,11 +45,16 @@ popd
 # to update the cmake in the docker image.
 echo "Add CMake to emsdk Docker image for Web build"
 docker exec -it emscripten sh -c "apt-get -qq update -y"
-docker exec -it emscripten sh -c "apt-get -qq install -y --no-install-recommends apt-transport-https gnupg software-properties-common wget"
+echo "Installing  apt-transport-https, etc."
+docker exec -it emscripten sh -c "apt-get -qq install -o Debug::pkgProblemResolver=true -o Debug::Acquire::http=true -y --no-install-recommends apt-transport-https gnupg software-properties-common wget"
+echo "Fetching KitWare keys."
 docker exec -it emscripten sh -c "wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
+echo "Adding Kitware repository."
 docker exec -it emscripten sh -c "apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ bionic main'"
+echo "Updating package database."
 docker exec -it emscripten sh -c "apt-get -qq update -y"
-docker exec -it emscripten sh -c "DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends cmake"
+echo "Installing cmake."
+docker exec -it emscripten sh -c "apt-get -qq install -y --no-install-recommends cmake"
 
 echo "Emscripten version"
 docker exec -it emscripten sh -c "emcc --version"
