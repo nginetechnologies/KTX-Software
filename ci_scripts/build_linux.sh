@@ -40,14 +40,16 @@ popd
 # Emscripten/WebAssembly
 
 
-# Add cmake & cpack to the Emscripten docker image.
-#echo "Add CMake to Emscripten Docker image for Web"
-#docker exec -it emscripten sh -c "DEBIAN_FRONTEND=noninteractive apt-get update"
-#docker exec -it emscripten sh -c "DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends apt-transport-https ca-certificates gnupg software-properties-common wget"
-#docker exec -it emscripten sh -c "wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
-#docker exec -it emscripten sh -c "DEBIAN_FRONTEND=noninteractive apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'"
-#docker exec -it emscripten sh -c "DEBIAN_FRONTEND=noninteractive apt-get update"
-#docker exec -it emscripten sh -c "DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends cmake"
+# As of this writing (2/23/2021) the official emsdk Docker image is based on
+# Debian Buster whose package manager includes CMake 3.13. Therefore we need
+# to update the cmake in the docker image.
+echo "Add CMake to emsdk Docker image for Web build"
+docker exec -it emscripten sh -c "apt-get -qq update -y"
+docker exec -it emscripten sh -c "apt-get -qq install -y --no-install-recommends apt-transport-https gnupg software-properties-common wget"
+docker exec -it emscripten sh -c "wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
+docker exec -it emscripten sh -c "apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ bionic main'"
+docker exec -it emscripten sh -c "apt-get -qq update -y"
+docker exec -it emscripten sh -c "DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends cmake"
 
 echo "Emscripten version"
 docker exec -it emscripten sh -c "emcc --version"
