@@ -46,7 +46,7 @@ popd
 echo "Add CMake to emsdk Docker image for Web build"
 docker exec -it emscripten sh -c "apt-get -qq update -y"
 echo "Installing  apt-transport-https, etc."
-docker exec -it emscripten sh -c "apt-get -qq install -y --no-install-recommends apt-transport-https gnupg software-properties-common wget"
+docker exec -it emscripten sh -c "apt-get -qq install -y --no-install-recommends apt-transport-https gnupg software-properties-common wget libssl"
 echo "Fetching KitWare keys."
 docker exec -it emscripten sh -c "wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
 echo "Adding Kitware repository."
