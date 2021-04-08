@@ -78,7 +78,7 @@ enum InterpretDFDResult interpretDFD(const uint32_t *DFD,
 
     /* Only support the RGB color model. */
     /* We could expand this to allow "UNSPECIFIED" as well. */
-    if (KHR_DFDVAL(BDFDB, MODEL) != KHR_DF_MODEL_RGBSDA) return i_UNSUPPORTED_CHANNEL_TYPES;
+    if (KHR_DFDVAL(BDFDB, MODEL) != KHR_DF_MODEL_RGBSDA && KHR_DFDVAL(BDFDB, MODEL) != KHR_DF_MODEL_UNSPECIFIED) return i_UNSUPPORTED_CHANNEL_TYPES;
 
     /* We only pay attention to sRGB. */
     if (KHR_DFDVAL(BDFDB, TRANSFER) == KHR_DF_TRANSFER_SRGB) result |= i_SRGB_FORMAT_BIT;
